@@ -1,0 +1,25 @@
+#pragma kernel main
+
+#include "simplex.hlsl"
+
+RWTexture2D<float4> Result;
+
+float time;
+
+[numthreads(8,8,1)]
+void main (uint3 id : SV_DispatchThreadID)
+{
+	float3 d;
+	float3 d2;
+	float n = simplexNoise(float3((float)(id.x) / 16, (float)(id.y) / 16, time));
+	float n2 = simplexNoise(float3((float)(id.x) / 32, (float)(id.y) / 32, time));
+	float n3 = simplexNoise(float3((float)(id.x) / 64, (float)(id.y) / 64, time));
+	float n4 = simplexNoise(float3((float)(id.x) / 128, (float)(id.y) / 128, time));
+	float n5 = simplexNoise(float3((float)(id.x) / 256, (float)(id.y) / 256, time));
+	
+	n = (n * 16 + n2 * 32 + n3 * 64 + n4 * 128 + n5 * 256) / 496 + 0.2;
+	
+	
+	
+    Result[id.xy] = float4(n, n * 0.2, 0, 1);
+}

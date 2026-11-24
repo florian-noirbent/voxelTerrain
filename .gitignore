@@ -1,0 +1,10 @@
+# Unity generated folders and IDE files
+/Library/
+/Temp/
+/Obj/
+*.csproj
+*.unityproj
+*.sln
+*.pidb
+*.userprefs
+.DS_Store
